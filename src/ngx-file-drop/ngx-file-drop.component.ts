@@ -153,18 +153,19 @@ export class NgxFileDropComponent implements OnDestroy {
   }
 
   public dropFiles(event: DragEvent): void {
-    if (!this.isDropzoneDisabled()) {
-      this.isDraggingOverDropZone = false;
-      if (event.dataTransfer) {
-        let items: FileList | DataTransferItemList;
-        if (event.dataTransfer.items) {
-          items = event.dataTransfer.items;
-        } else {
-          items = event.dataTransfer.files;
-        }
-        this.preventAndStop(event);
-        this.checkFiles(items);
+    if (this.isDropzoneDisabled()) {
+      return;
+    }
+    this.isDraggingOverDropZone = false;
+    if (event.dataTransfer) {
+      let items: FileList | DataTransferItemList;
+      if (event.dataTransfer.files) {
+        items = event.dataTransfer.files;
+      } else {
+        items = event.dataTransfer.items;
       }
+      this.preventAndStop(event);
+      this.checkFiles(items);
     }
   }
 
